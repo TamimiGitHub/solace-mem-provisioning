@@ -1,0 +1,258 @@
+---
+components:
+  schemas: {}
+  messages:
+    Order Updated:
+      x-ep-event-id: "c07wyeuia0a"
+      x-ep-event-version-displayname: ""
+      x-ep-custom-attr-runtime-config: "{\n\t\"kafkaTopic\": {\n\t\t\"cleanup.policy\"\
+        : \"delete\",\n\t\t\"compression.type\": \"producer\",\n\t\t\"delete.retention.ms\"\
+        : 86400000,\n\t\t\"file.delete.delay.ms\": 60000,\n\t\t\"flush.messages\"\
+        : 9223372036854776000,\n\t\t\"flush.ms\": 9223372036854776000,\n\t\t\"follower.replication.throttled.replicas\"\
+        : \"\",\n\t\t\"index.interval.bytes\": 4096,\n\t\t\"leader.replication.throttled.replicas\"\
+        : \"\",\n\t\t\"max.compaction.lag.ms\": 9223372036854776000,\n\t\t\"max.message.bytes\"\
+        : 2097164,\n\t\t\"message.downconversion.enable\": true,\n\t\t\"message.format.version\"\
+        : \"3.0-IV1\",\n\t\t\"message.timestamp.difference.max.ms\": 9223372036854776000,\n\
+        \t\t\"message.timestamp.type\": \"CreateTime\",\n\t\t\"min.cleanable.dirty.ratio\"\
+        : 0.5,\n\t\t\"min.compaction.lag.ms\": 0,\n\t\t\"min.insync.replicas\": 2,\n\
+        \t\t\"name\": \"order-validations\",\n\t\t\"partitions\": [{\n\t\t\t\"id\"\
+        : 0,\n\t\t\t\"isrCount\": 3,\n\t\t\t\"replicaCount\": 3\n\t\t}, {\n\t\t\t\"\
+        id\": 1,\n\t\t\t\"isrCount\": 3,\n\t\t\t\"replicaCount\": 3\n\t\t}],\n\t\t\
+        \"preallocate\": false,\n\t\t\"retention.bytes\": -1,\n\t\t\"retention.ms\"\
+        : 604800000,\n\t\t\"segment.bytes\": 104857600,\n\t\t\"segment.index.bytes\"\
+        : 10485760,\n\t\t\"segment.jitter.ms\": 0,\n\t\t\"segment.ms\": 604800000,\n\
+        \t\t\"unclean.leader.election.enable\": false\n\t}\n}"
+      description: "As the order moves through the fulfillment process, each service\
+        \ add to this topic to show current state."
+      x-ep-application-domain-id: "4u9gsifl3c6"
+      schemaFormat: "application/vnd.apache.avro+json;version=1.9.0"
+      x-ep-event-state-name: "RELEASED"
+      x-ep-shared: "true"
+      x-ep-application-domain-name: "OnlineServices"
+      x-ep-event-version-id: "63r8r0i6ood"
+      payload:
+        namespace: "io.confluent.examples.streams.avro.microservices"
+        name: "OrderValidation"
+        type: "record"
+        fields:
+        - name: "orderId"
+          type: "string"
+        - name: "OrderValidationType"
+          type: "enum"
+          symbols:
+          - "INVENTORY_CHECK"
+          - "FRAUD_CHECK"
+          - "ORDER_DETAILS_CHECK"
+        - name: "OrderValidationResult"
+          type: "enum"
+          symbols:
+          - "PASS"
+          - "FAIL"
+          - "ERROR"
+      x-ep-event-version: "1.0.1"
+      x-ep-event-name: "Order Updated"
+      contentType: "application/json"
+      x-ep-event-state-id: "2"
+      x-ep-custom-attr-confidential: "true"
+    Order Created:
+      x-ep-event-id: "cjrkzqy1b4e"
+      x-ep-event-version-displayname: ""
+      x-ep-custom-attr-runtime-config: "{\n\t\"kafkaTopic\": {\n\t\t\"cleanup.policy\"\
+        : \"delete\",\n\t\t\"compression.type\": \"producer\",\n\t\t\"delete.retention.ms\"\
+        : 86400000,\n\t\t\"file.delete.delay.ms\": 60000,\n\t\t\"flush.messages\"\
+        : 9223372036854776000,\n\t\t\"flush.ms\": 9223372036854776000,\n\t\t\"follower.replication.throttled.replicas\"\
+        : \"\",\n\t\t\"index.interval.bytes\": 4096,\n\t\t\"leader.replication.throttled.replicas\"\
+        : \"\",\n\t\t\"max.compaction.lag.ms\": 9223372036854776000,\n\t\t\"max.message.bytes\"\
+        : 2097164,\n\t\t\"message.downconversion.enable\": true,\n\t\t\"message.format.version\"\
+        : \"3.0-IV1\",\n\t\t\"message.timestamp.difference.max.ms\": 9223372036854776000,\n\
+        \t\t\"message.timestamp.type\": \"CreateTime\",\n\t\t\"min.cleanable.dirty.ratio\"\
+        : 0.5,\n\t\t\"min.compaction.lag.ms\": 0,\n\t\t\"min.insync.replicas\": 2,\n\
+        \t\t\"name\": \"orders\",\n\t\t\"partitions\": [{\n\t\t\t\"id\": 0,\n\t\t\t\
+        \"isrCount\": 3,\n\t\t\t\"replicaCount\": 3\n\t\t}, {\n\t\t\t\"id\": 1,\n\t\
+        \t\t\"isrCount\": 3,\n\t\t\t\"replicaCount\": 3\n\t\t}],\n\t\t\"preallocate\"\
+        : false,\n\t\t\"retention.bytes\": -1,\n\t\t\"retention.ms\": 604800000,\n\
+        \t\t\"segment.bytes\": 104857600,\n\t\t\"segment.index.bytes\": 10485760,\n\
+        \t\t\"segment.jitter.ms\": 0,\n\t\t\"segment.ms\": 604800000,\n\t\t\"unclean.leader.election.enable\"\
+        : false\n\t}\n}"
+      description: "Created after an order is validated as correct and passes logic\
+        \ checks"
+      x-ep-application-domain-id: "4u9gsifl3c6"
+      schemaFormat: "application/vnd.apache.avro+json;version=1.9.0"
+      x-ep-event-state-name: "RELEASED"
+      x-ep-shared: "true"
+      x-ep-application-domain-name: "OnlineServices"
+      x-ep-event-version-id: "m28d87t7fi2"
+      payload:
+        namespace: "io.confluent.examples.streams.avro.microservices"
+        name: "Order"
+        type: "record"
+        fields:
+        - name: "id"
+          type: "string"
+        - name: "customerId"
+          type: "long"
+        - name: "state"
+          type: "OrderState"
+        - name: "product"
+          type: "enum"
+          symbols:
+          - "JUMPERS"
+          - "UNDERPANTS"
+          - "STOCKINGS"
+        - name: "quantity"
+          type: "int"
+        - name: "price"
+          type: "double"
+        - name: "OrderState"
+          type: "enum"
+          symbols:
+          - "CREATED"
+          - "VALIDATED"
+          - "FAILED"
+          - "SHIPPED"
+      x-ep-event-version: "2.0.1"
+      x-ep-event-name: "Order Created"
+      contentType: "application/json"
+      x-ep-event-state-id: "2"
+      x-ep-custom-attr-confidential: "true"
+    Warehouse Inventory:
+      x-ep-event-id: "mtp68xkue08"
+      x-ep-event-version-displayname: ""
+      x-ep-custom-attr-runtime-config: "{\n\t\"kafkaTopic\": {\n\t\t\"cleanup.policy\"\
+        : \"delete\",\n\t\t\"compression.type\": \"producer\",\n\t\t\"delete.retention.ms\"\
+        : 86400000,\n\t\t\"file.delete.delay.ms\": 60000,\n\t\t\"flush.messages\"\
+        : 9223372036854776000,\n\t\t\"flush.ms\": 9223372036854776000,\n\t\t\"follower.replication.throttled.replicas\"\
+        : \"\",\n\t\t\"index.interval.bytes\": 4096,\n\t\t\"leader.replication.throttled.replicas\"\
+        : \"\",\n\t\t\"max.compaction.lag.ms\": 9223372036854776000,\n\t\t\"max.message.bytes\"\
+        : 2097164,\n\t\t\"message.downconversion.enable\": true,\n\t\t\"message.format.version\"\
+        : \"3.0-IV1\",\n\t\t\"message.timestamp.difference.max.ms\": 9223372036854776000,\n\
+        \t\t\"message.timestamp.type\": \"CreateTime\",\n\t\t\"min.cleanable.dirty.ratio\"\
+        : 0.5,\n\t\t\"min.compaction.lag.ms\": 0,\n\t\t\"min.insync.replicas\": 2,\n\
+        \t\t\"name\": \"warehouse-inventory\",\n\t\t\"partitions\": [{\n\t\t\t\"id\"\
+        : 0,\n\t\t\t\"isrCount\": 3,\n\t\t\t\"replicaCount\": 3\n\t\t}, {\n\t\t\t\"\
+        id\": 1,\n\t\t\t\"isrCount\": 3,\n\t\t\t\"replicaCount\": 3\n\t\t}],\n\t\t\
+        \"preallocate\": false,\n\t\t\"retention.bytes\": -1,\n\t\t\"retention.ms\"\
+        : 604800000,\n\t\t\"segment.bytes\": 104857600,\n\t\t\"segment.index.bytes\"\
+        : 10485760,\n\t\t\"segment.jitter.ms\": 0,\n\t\t\"segment.ms\": 604800000,\n\
+        \t\t\"unclean.leader.election.enable\": false\n\t}\n}"
+      description: "Current stock levels for items in the warehouse"
+      x-ep-application-domain-id: "gf82aon308v"
+      schemaFormat: "application/vnd.apache.avro+json;version=1.9.0"
+      x-ep-event-state-name: "RELEASED"
+      x-ep-shared: "true"
+      x-ep-application-domain-name: "Fulfillment"
+      x-ep-event-version-id: "i1d60fqg2db"
+      payload:
+        namespace: "io.confluent.examples.streams.avro.microservices"
+        name: "Inventory"
+        type: "record"
+        fields:
+        - name: "id"
+          type: "string"
+        - name: "product"
+          type: "enum"
+          symbols:
+          - "JUMPERS"
+          - "UNDERPANTS"
+          - "STOCKINGS"
+        - name: "quantity"
+          type: "int"
+      x-ep-event-version: "1.0.1"
+      x-ep-event-name: "Warehouse Inventory"
+      contentType: "application/json"
+      x-ep-event-state-id: "2"
+      x-ep-custom-attr-confidential: "false"
+    Order Validated:
+      x-ep-event-id: "cd693dfftu7"
+      x-ep-event-version-displayname: ""
+      x-ep-custom-attr-runtime-config: "{\n\t\"kafkaTopic\": {\n\t\t\"cleanup.policy\"\
+        : \"delete\",\n\t\t\"compression.type\": \"producer\",\n\t\t\"delete.retention.ms\"\
+        : 86400000,\n\t\t\"file.delete.delay.ms\": 60000,\n\t\t\"flush.messages\"\
+        : 9223372036854776000,\n\t\t\"flush.ms\": 9223372036854776000,\n\t\t\"follower.replication.throttled.replicas\"\
+        : \"\",\n\t\t\"index.interval.bytes\": 4096,\n\t\t\"leader.replication.throttled.replicas\"\
+        : \"\",\n\t\t\"max.compaction.lag.ms\": 9223372036854776000,\n\t\t\"max.message.bytes\"\
+        : 2097164,\n\t\t\"message.downconversion.enable\": true,\n\t\t\"message.format.version\"\
+        : \"3.0-IV1\",\n\t\t\"message.timestamp.difference.max.ms\": 9223372036854776000,\n\
+        \t\t\"message.timestamp.type\": \"CreateTime\",\n\t\t\"min.cleanable.dirty.ratio\"\
+        : 0.5,\n\t\t\"min.compaction.lag.ms\": 0,\n\t\t\"min.insync.replicas\": 2,\n\
+        \t\t\"name\": \"orders\",\n\t\t\"partitions\": [{\n\t\t\t\"id\": 0,\n\t\t\t\
+        \"isrCount\": 3,\n\t\t\t\"replicaCount\": 3\n\t\t}, {\n\t\t\t\"id\": 1,\n\t\
+        \t\t\"isrCount\": 3,\n\t\t\t\"replicaCount\": 3\n\t\t}],\n\t\t\"preallocate\"\
+        : false,\n\t\t\"retention.bytes\": -1,\n\t\t\"retention.ms\": 604800000,\n\
+        \t\t\"segment.bytes\": 104857600,\n\t\t\"segment.index.bytes\": 10485760,\n\
+        \t\t\"segment.jitter.ms\": 0,\n\t\t\"segment.ms\": 604800000,\n\t\t\"unclean.leader.election.enable\"\
+        : false\n\t}\n}"
+      description: "This is a store of order data that indicates whether the order\
+        \ has been validated"
+      x-ep-application-domain-id: "4u9gsifl3c6"
+      schemaFormat: "application/vnd.apache.avro+json;version=1.9.0"
+      x-ep-event-state-name: "RELEASED"
+      x-ep-shared: "false"
+      x-ep-application-domain-name: "OnlineServices"
+      x-ep-event-version-id: "9w3p511ijad"
+      payload:
+        namespace: "io.confluent.examples.streams.avro.microservices"
+        name: "OrderEnriched"
+        type: "record"
+        fields:
+        - name: "id"
+          type: "string"
+        - name: "customerId"
+          type: "long"
+        - name: "customerLevel"
+          type: "string"
+      x-ep-event-version: "1.1.0"
+      x-ep-event-name: "Order Validated"
+      contentType: "application/json"
+      x-ep-event-state-id: "2"
+      x-ep-custom-attr-confidential: "true"
+channels:
+  warehouse-inventory:
+    subscribe:
+      message:
+        $ref: "#/components/messages/Warehouse Inventory"
+    publish:
+      bindings:
+        kafka:
+          clientId:
+            type: "string"
+            enum:
+            - "INVENTORY.INVENTORY"
+          bindingVersion: "0.3.0"
+      message:
+        $ref: "#/components/messages/Warehouse Inventory"
+  orders:
+    publish:
+      bindings:
+        kafka:
+          clientId:
+            type: "string"
+            enum:
+            - "INVENTORY.ORDERS"
+          bindingVersion: "0.3.0"
+      message:
+        oneOf:
+        - $ref: "#/components/messages/Order Created"
+        - $ref: "#/components/messages/Order Validated"
+  order-validations:
+    subscribe:
+      message:
+        $ref: "#/components/messages/Order Updated"
+asyncapi: "2.5.0"
+info:
+  x-ep-application-version: "1.0.2"
+  x-ep-application-version-id: "bpu6l4aw1oc"
+  x-ep-application-id: "igvo21t3e6j"
+  description: "This service validates incoming orders to ensure there is sufficient\
+    \ stock to fulfill them. This validation process considers both the inventory\
+    \ in the warehouse as well as a set \"reserved\" items which is maintained by\
+    \ this service. Reserved items are those that are in the warehouse, but have been\
+    \ allocated to a pending order.\n\n[GitHub](https://github.com/confluentinc/kafka-streams-examples/blob/5.0.0-post/src/main/java/io/confluent/examples/streams/microservices/InventoryService.java)"
+  x-ep-state-name: "RELEASED"
+  x-ep-custom-attr-acl-principal: "CN=InventoryService,OU=Fulfillment,DC=AcmeRetail,DC=COM"
+  title: "Inventory Service"
+  x-ep-application-domain-id: "gf82aon308v"
+  x-ep-custom-attr-application-type: "java"
+  version: "1.0.2"
+  x-ep-state-id: "2"
+  x-ep-application-domain-name: "Fulfillment"

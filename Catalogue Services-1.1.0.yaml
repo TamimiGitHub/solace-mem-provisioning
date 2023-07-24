@@ -1,0 +1,76 @@
+---
+components:
+  schemas: {}
+  messages:
+    Catalogue:
+      x-ep-event-id: "x2ccslndfpj"
+      x-ep-event-version-displayname: ""
+      x-ep-custom-attr-runtime-config: "{\n\t\"kafkaTopic\": {\n\t\t\"cleanup.policy\"\
+        : \"delete\",\n\t\t\"compression.type\": \"producer\",\n\t\t\"delete.retention.ms\"\
+        : 86400000,\n\t\t\"file.delete.delay.ms\": 60000,\n\t\t\"flush.messages\"\
+        : 9223372036854776000,\n\t\t\"flush.ms\": 9223372036854776000,\n\t\t\"follower.replication.throttled.replicas\"\
+        : \"\",\n\t\t\"index.interval.bytes\": 4096,\n\t\t\"leader.replication.throttled.replicas\"\
+        : \"\",\n\t\t\"max.compaction.lag.ms\": 9223372036854776000,\n\t\t\"max.message.bytes\"\
+        : 2097164,\n\t\t\"message.downconversion.enable\": true,\n\t\t\"message.format.version\"\
+        : \"3.0-IV1\",\n\t\t\"message.timestamp.difference.max.ms\": 9223372036854776000,\n\
+        \t\t\"message.timestamp.type\": \"CreateTime\",\n\t\t\"min.cleanable.dirty.ratio\"\
+        : 0.5,\n\t\t\"min.compaction.lag.ms\": 0,\n\t\t\"min.insync.replicas\": 2,\n\
+        \t\t\"name\": \"catalogue\",\n\t\t\"partitions\": [{\n\t\t\t\"id\": 0,\n\t\
+        \t\t\"isrCount\": 3,\n\t\t\t\"replicaCount\": 3\n\t\t}, {\n\t\t\t\"id\": 1,\n\
+        \t\t\t\"isrCount\": 3,\n\t\t\t\"replicaCount\": 3\n\t\t}],\n\t\t\"preallocate\"\
+        : false,\n\t\t\"retention.bytes\": -1,\n\t\t\"retention.ms\": 604800000,\n\
+        \t\t\"segment.bytes\": 104857600,\n\t\t\"segment.index.bytes\": 10485760,\n\
+        \t\t\"segment.jitter.ms\": 0,\n\t\t\"segment.ms\": 604800000,\n\t\t\"unclean.leader.election.enable\"\
+        : false\n\t}\n}"
+      description: "Changes in items available for purchase from the store and their\
+        \ descriptions."
+      x-ep-application-domain-id: "zp40l564ym7"
+      schemaFormat: "application/vnd.apache.avro+json;version=1.9.0"
+      x-ep-event-state-name: "RELEASED"
+      x-ep-shared: "true"
+      x-ep-application-domain-name: "Merchandising"
+      x-ep-event-version-id: "d5bwzb5kc3w"
+      payload:
+        namespace: "io.confluent.examples.streams.avro.microservices"
+        name: "Catalog"
+        type: "record"
+        fields:
+        - name: "id"
+          type: "string"
+        - name: "product"
+          type: "enum"
+          symbols:
+          - "JUMPERS"
+          - "UNDERPANTS"
+          - "STOCKINGS"
+        - name: "quantity"
+          type: "int"
+      x-ep-event-version: "1.0.1"
+      x-ep-event-name: "Catalogue"
+      contentType: "application/json"
+      x-ep-event-state-id: "2"
+      x-ep-custom-attr-confidential: "false"
+channels:
+  catalogue:
+    subscribe:
+      message:
+        $ref: "#/components/messages/Catalogue"
+asyncapi: "2.5.0"
+info:
+  x-ep-application-version: "1.1.0"
+  x-ep-application-version-id: "uxa5ul4hvvw"
+  x-ep-application-id: "lvlnpuk0ryi"
+  description: "A legacy codebase that manages changes made to the product catalog,\
+    \ initiated from an internal UI. This has comparatively fewer users, and an existing\
+    \ codebase. Events are picked up from the legacy Postgres database using a CDC\
+    \ connector to push them into Kafka. The single-message transforms feature reformats\
+    \ the messages before they are made public. Images are saved to a distributed\
+    \ filesystem for access by the web tier.\n\n[GitHub source](https://github.com/confluentinc/kafka-streams-examples)"
+  x-ep-state-name: "RELEASED"
+  x-ep-custom-attr-acl-principal: "CN=CatalogueServices,OU=Merchandising,DC=AcmeRetail,DC=COM"
+  title: "Catalogue Services"
+  x-ep-application-domain-id: "zp40l564ym7"
+  x-ep-custom-attr-application-type: "cobol"
+  version: "1.1.0"
+  x-ep-state-id: "2"
+  x-ep-application-domain-name: "Merchandising"
