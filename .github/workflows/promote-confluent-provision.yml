@@ -1,0 +1,97 @@
+# This workflow will be triggered on every merge to the prod, int, and dev branches 
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# Validation only runs if an AsyncAPI spec file is present in the commit
+
+# To get started, configure the following in your repos secrets https://docs.github.com/en/actions/security-guides/encrypted-secrets
+# SOLACE_CLOUD_TOKEN
+# TF_BACKEND_S3_BUCKET_KEY
+# AWS_ACCESS_KEY_ID
+# AWS_SECRET_ACCESS_KEY
+# TF_VAR_cloud_api_key
+# TF_VAR_cloud_api_secret
+# TF_VAR_kafka_api_key
+# TF_VAR_kafka_api_secret
+# TF_VAR_kafka_rest_endpoint
+# TF_VAR_kafka_id
+
+name: Provision the confluent cluster
+on:
+  push: 
+    branches: [ prod, dev, int ]
+
+env:
+  SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
+  TF_BACKEND_S3_BUCKET_KEY: ${{ secrets.TF_BACKEND_S3_BUCKET_KEY }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  TF_VAR_cloud_api_key: ${{ secrets.TF_VAR_cloud_api_key }}
+  TF_VAR_cloud_api_secret: ${{ secrets.TF_VAR_cloud_api_secret }}
+  TF_VAR_kafka_api_key: ${{ secrets.TF_VAR_kafka_api_key }}
+  TF_VAR_kafka_api_secret: ${{ secrets.TF_VAR_kafka_api_secret }}
+  TF_VAR_kafka_rest_endpoint: ${{ secrets.TF_VAR_kafka_rest_endpoint }}
+  TF_VAR_kafka_id: ${{ secrets.TF_VAR_kafka_id }}
+
+jobs:
+
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Current Branch
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+        
+      - name: Checkout terraform configuration repo
+        uses: actions/checkout@v2
+        with:
+          repository: TamimiGitHub/solace-terraform-provisioning
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Promote applicaiton
+        # Todo 
+        # Parse async api file in commit and extract application version id 
+        run: npm run promote -- -av 133tineuf8h -mes PROD-Kafka
+
+  provision:
+      needs: promote 
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout Current Branch
+          uses: actions/checkout@master
+          with:
+            ref: ${{ github.ref }}
+          
+        - name: Checkout terraform configuration repo
+          uses: actions/checkout@v2
+          with:
+            repository: TamimiGitHub/solace-terraform-provisioning
+        
+        - name: Install dependencies
+          run: npm install
+
+        - name: run provision commands
+          run: |
+            touch env-config-confluent.list
+            echo "TF_MODULE=confluent-topics" >> env-config-confluent.list
+            echo "TF_BACKEND_S3_BUCKET=tf-test-confluent-topics" >> env-config-confluent.list
+            echo "# Cluster terraform-dev" >> env-config-confluent.list
+            echo "TF_BACKEND_S3_BUCKET_KEY=$TF_BACKEND_S3_BUCKET_KEY" >> env-config-confluent.list
+            echo "TF_BACKEND_DYNAMODB_LOCK_TABLE=tf-test-confluent-topics-locks" >> env-config-confluent.list
+            echo "AWS_REGION=us-east-2" >> env-config-confluent.list
+            echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> env-config-confluent.list
+            echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> env-config-confluent.list
+            echo "TF_VAR_cloud_api_key=$TF_VAR_cloud_api_key" >> env-config-confluent.list
+            echo "TF_VAR_cloud_api_secret=$TF_VAR_cloud_api_secret" >> env-config-confluent.list
+            echo "TF_VAR_kafka_api_key=$TF_VAR_kafka_api_key" >> env-config-confluent.list
+            echo "TF_VAR_kafka_api_secret=$TF_VAR_kafka_api_secret" >> env-config-confluent.list
+            echo "TF_VAR_kafka_rest_endpoint=$TF_VAR_kafka_rest_endpoint" >> env-config-confluent.list
+            echo "TF_VAR_kafka_id=$TF_VAR_kafka_id" >> env-config-confluent.list
+
+            SOLACE_MESSAGING_SERVICE="PROD-Kafka" npm run provision
