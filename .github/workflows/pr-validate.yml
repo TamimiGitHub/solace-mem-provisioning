@@ -1,0 +1,33 @@
+# This workflow will be triggered on every merge to the prod, int, and dev branches 
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# Validation only runs if an AsyncAPI spec file is present in the commit
+name: Validate PR
+on:
+  pull_request: 
+    branches: [ prod, dev, int ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Current Branch
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+        
+      - name: Check if Asyncapi is present
+        # Todo 
+        run: echo "test"
+      
+      - name: Run tests
+        # Todo 
+        run: echo "test"
+      
+      - name: More tests
+        # Todo 
+        run: echo "test"
