@@ -38,7 +38,7 @@ env:
 
 jobs:
   promote:
-    permissions: write-all
+    # permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Setup node
