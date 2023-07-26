@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}
-          fetch-depth: 2
+          fetch-depth: 0
 
       # Get all files in commit
       - id: changed-files
