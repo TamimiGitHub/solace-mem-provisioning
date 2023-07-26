@@ -22,7 +22,7 @@
 name: Provision the confluent cluster
 on:
   push: 
-    branches: [ prod ]
+    branches: [ prods ]
 
 env:
   SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
