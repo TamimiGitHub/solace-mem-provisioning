@@ -90,6 +90,8 @@ jobs:
       - name: Cancel Workflow if no asyncAPI file present in PR
         if: env.CANCEL_WORKFLOW == 'true'
         uses: andymckay/cancel-action@0.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout terraform configuration repo
         uses: actions/checkout@v2
