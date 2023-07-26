@@ -36,6 +36,9 @@ env:
   TF_VAR_kafka_rest_endpoint: ${{ secrets.TF_VAR_kafka_rest_endpoint }}
   TF_VAR_kafka_id: ${{ secrets.TF_VAR_kafka_id }}
 
+permissions: 
+  actions: write
+
 jobs:
 
   promote:
