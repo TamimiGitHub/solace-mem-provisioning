@@ -36,8 +36,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          path: app
     
       - uses: hashicorp/setup-terraform@v2
         with:
@@ -86,11 +84,7 @@ jobs:
         run: npm install
 
       - name: Promote application 
-        run: |
-          ls -a
-          pwd
-          ls ../
-          npm run promote -- -f "../app/$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE
+        run: npm run promote -- -f "../${{ github.event.repository.name }}/$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE
 
       - name: Terraform plan
         id: plan
