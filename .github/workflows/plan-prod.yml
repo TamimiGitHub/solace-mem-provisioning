@@ -79,6 +79,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: TamimiGitHub/solace-terraform-provisioning
+          path: terraform
       
       - name: Install dependencies
         run: npm install
@@ -86,11 +87,11 @@ jobs:
       - name: Promote application 
         run: |
           pwd
-          ls
+          echo "YOLO"
           ls ../
-          ls ../${{ github.event.repository.name }}
           spec=$(echo $ASYNCAPI_FILE_PATH | sed 's/ /\\ /g')
-          npm run promote -- -f "../${{ github.event.repository.name }}/$spec" -mes $SOLACE_MESSAGING_SERVICE
+          # npm run promote -- -f "../${{ github.event.repository.name }}/$spec" -mes $SOLACE_MESSAGING_SERVICE
+          npm run promote -- -f "../$spec" -mes $SOLACE_MESSAGING_SERVICE
 
       - name: Terraform plan
         id: plan
