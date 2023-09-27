@@ -87,7 +87,7 @@ jobs:
         run: npm install
       
       - name: Promote applicaiton
-        run: npm run promote -- -f $ASYNCAPI_FILE_PATH -mes $SOLACE_MESSAGING_SERVICE
+        run: npm run promote -- -f "$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE
 
   provision:
       needs: promote 
