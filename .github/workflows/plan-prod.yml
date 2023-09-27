@@ -84,7 +84,11 @@ jobs:
         run: npm install
 
       - name: Promote application 
-        run: npm run promote -- -f "$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE
+        run: |
+          ls -a
+          pwd
+          ls ../
+          npm run promote -- -f "$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE
 
       - name: Terraform plan
         id: plan
