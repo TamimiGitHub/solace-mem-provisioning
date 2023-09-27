@@ -55,8 +55,9 @@ jobs:
           for file in "${MODIFIED_FILES_ARRAY[@]}"
               do
                 echo "changed file: $file"
-                if [[ ( ${file} == *.yaml ) || ( ${file} == *.yml ) ||  (${file} == *.yaml )]]
+                if [[ ( ${file} == *.yaml ) || ( ${file} == *.yml ) ||  ( ${file} == *.json )]]
                 then
+                  ehco "File found"
                   asyncapiFiles+=("$file")
                   echo "ASYNCAPI_FILE_PATH=${file}" >> $GITHUB_ENV
                 fi
