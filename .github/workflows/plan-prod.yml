@@ -36,7 +36,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
+        with:
+          path: app
+    
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.7
@@ -88,7 +90,7 @@ jobs:
           ls -a
           pwd
           ls ../
-          npm run promote -- -f "$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE
+          npm run promote -- -f "../app/$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE
 
       - name: Terraform plan
         id: plan
