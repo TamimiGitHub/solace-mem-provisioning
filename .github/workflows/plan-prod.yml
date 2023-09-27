@@ -85,6 +85,10 @@ jobs:
 
       - name: Promote application 
         run: |
+          pwd
+          ls
+          ls ../
+          ls ../${{ github.event.repository.name }}
           spec=$(echo $ASYNCAPI_FILE_PATH | sed 's/ /\\ /g')
           npm run promote -- -f "../${{ github.event.repository.name }}/$spec" -mes $SOLACE_MESSAGING_SERVICE
 
