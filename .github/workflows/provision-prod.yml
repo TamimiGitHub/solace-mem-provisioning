@@ -58,7 +58,6 @@ jobs:
           asyncapiFiles=()
           for file in "${MODIFIED_FILES_ARRAY[@]}"
               do
-                echo "changed file: $file"
                 if [[ ( ${file} == *.yaml ) || ( ${file} == *.yml ) ||  (${file} == *.json )]]
                 then
                   asyncapiFiles+=("$file")
