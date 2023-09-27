@@ -49,8 +49,8 @@ jobs:
     
       - name: List all modified files
         run: |
-          echo "${{ steps.changed-files.outputs.modified_files }}"
-          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.modified_files }}"
+          echo "${{ steps.changed-files.outputs.all_modified_files }}"
+          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.all_modified_files }}"
           asyncapiFiles=()
           for file in "${MODIFIED_FILES_ARRAY[@]}"
               do
