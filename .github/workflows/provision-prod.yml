@@ -93,7 +93,7 @@ jobs:
       - name: Promote application 
         run: |
           cd terraform
-          npm run promote -- -f "../$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE -d
+          npm run promote -- -f "../$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE
 
   provision:
       needs: promote 
