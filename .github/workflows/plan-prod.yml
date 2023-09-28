@@ -89,8 +89,8 @@ jobs:
       - name: Promote application 
         run: |
           cd terraform
-          spec=$(echo $ASYNCAPI_FILE_PATH | sed 's/ /\\ /g')
-          npm run promote -- -f "../$spec" -mes $SOLACE_MESSAGING_SERVICE
+          # spec=$(echo $ASYNCAPI_FILE_PATH | sed 's/ /\\ /g')
+          npm run promote -- -f "../$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE
 
       - name: Terraform plan
         id: plan
@@ -99,8 +99,8 @@ jobs:
       - name: Demote application 
         run: | 
           cd terraform
-          spec=$(echo $ASYNCAPI_FILE_PATH | sed 's/ /\\ /g')
-          npm run promote -- -f "../$spec" -mes $SOLACE_MESSAGING_SERVICE -d
+          # spec=$(echo $ASYNCAPI_FILE_PATH | sed 's/ /\\ /g')
+          npm run promote -- -f "../$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE -d
 
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
