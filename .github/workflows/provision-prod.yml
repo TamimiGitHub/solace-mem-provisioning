@@ -94,7 +94,7 @@ jobs:
         run: |
           cd terraform
           spec=$(echo $ASYNCAPI_FILE_PATH | sed 's/ /\\ /g')
-          npm run promote -- -f "../asyncapi/$spec" -mes $SOLACE_MESSAGING_SERVICE
+          npm run promote -- -f "../$spec" -mes $SOLACE_MESSAGING_SERVICE
 
   provision:
       needs: promote 
