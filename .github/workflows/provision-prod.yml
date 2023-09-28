@@ -42,7 +42,7 @@ jobs:
           node-version: '16'
           
       - name: Checkout Current Branch
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
 
@@ -100,7 +100,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout terraform configuration repo
-          uses: actions/checkout@4
+          uses: actions/checkout@v4
           with:
             repository: TamimiGitHub/solace-terraform-provisioning
         
