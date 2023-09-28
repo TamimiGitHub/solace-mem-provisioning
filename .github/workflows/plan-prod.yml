@@ -35,7 +35,7 @@ jobs:
   terraform-plan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
     
       - uses: hashicorp/setup-terraform@v2
         with:
@@ -76,29 +76,31 @@ jobs:
     
       # Spec file found in commit
       - name: Checkout terraform configuration repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: TamimiGitHub/solace-terraform-provisioning
           path: terraform
       
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd terraform
+          npm install
 
       - name: Promote application 
         run: |
-          pwd
-          echo "YOLO"
-          ls ../
+          cd terraform
           spec=$(echo $ASYNCAPI_FILE_PATH | sed 's/ /\\ /g')
-          # npm run promote -- -f "../${{ github.event.repository.name }}/$spec" -mes $SOLACE_MESSAGING_SERVICE
-          npm run promote -- -f "../$spec" -mes $SOLACE_MESSAGING_SERVICE
+          npm run promote -- -f "../asyncapi/$spec" -mes $SOLACE_MESSAGING_SERVICE
 
       - name: Terraform plan
         id: plan
-        run: SOLACE_MESSAGING_SERVICE=$SOLACE_MESSAGING_SERVICE npm run plan
+        run: cd terraform; SOLACE_MESSAGING_SERVICE=$SOLACE_MESSAGING_SERVICE npm run plan
 
       - name: Demote application 
-        run: npm run promote -- -f "$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE -d
+        run: | 
+          cd terraform
+          spec=$(echo $ASYNCAPI_FILE_PATH | sed 's/ /\\ /g')
+          npm run promote -- -f "../asyncapi/$spec" -mes $SOLACE_MESSAGING_SERVICE -d
 
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'

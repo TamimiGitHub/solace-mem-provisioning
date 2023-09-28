@@ -42,7 +42,7 @@ jobs:
           node-version: '16'
           
       - name: Checkout Current Branch
-        uses: actions/checkout@master
+        uses: actions/checkout@4
         with:
           ref: ${{ github.ref }}
 
@@ -78,28 +78,30 @@ jobs:
         with:
           token: ${{ secrets.WORKFLOW_PAT }}
 
+      # Spec file found in commit
       - name: Checkout terraform configuration repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: TamimiGitHub/solace-terraform-provisioning
+          path: terraform
       
       - name: Install dependencies
-        run: npm install
-      
-      - name: Promote applicaiton
-        run: npm run promote -- -f "$ASYNCAPI_FILE_PATH" -mes $SOLACE_MESSAGING_SERVICE
+        run: |
+          cd terraform
+          npm install
+
+      - name: Promote application 
+        run: |
+          cd terraform
+          spec=$(echo $ASYNCAPI_FILE_PATH | sed 's/ /\\ /g')
+          npm run promote -- -f "../asyncapi/$spec" -mes $SOLACE_MESSAGING_SERVICE
 
   provision:
       needs: promote 
       runs-on: ubuntu-latest
       steps:
-        - name: Checkout Current Branch
-          uses: actions/checkout@master
-          with:
-            ref: ${{ github.ref }}
-          
         - name: Checkout terraform configuration repo
-          uses: actions/checkout@v2
+          uses: actions/checkout@4
           with:
             repository: TamimiGitHub/solace-terraform-provisioning
         
